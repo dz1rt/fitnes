@@ -3,19 +3,14 @@ package com.example.fitnes.fitnes;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,8 +24,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class RegActivity extends AppCompatActivity {
 
     private UserAuthTask mAuthTask = null;
-    private Button backBtn,regBtn;
-    private EditText regLogin,regEmail,regPass,regPassConfirm;
+    private Button backBtn, regBtn;
+    private EditText regLogin, regEmail, regPass, regPassConfirm;
 
     private RegActivity context = this;
 
@@ -58,8 +53,8 @@ public class RegActivity extends AppCompatActivity {
                     String pass = regPass.getText().toString();
                     String passConfirm = regPassConfirm.getText().toString();
                     pass.equals(passConfirm);
-                    if(!login.equals("") && !email.equals("") && pass.equals(passConfirm) && !pass.equals("")){
-                        mAuthTask = new UserAuthTask(context, login, email,pass);
+                    if (!login.equals("") && !email.equals("") && pass.equals(passConfirm) && !pass.equals("")) {
+                        mAuthTask = new UserAuthTask(context, login, email, pass);
                         mAuthTask.execute();
                     }
                 }
@@ -92,14 +87,14 @@ public class RegActivity extends AppCompatActivity {
                     // чтобы уведомить о том, что такой пользователь с таким логином/email уже существует.
                     // Не использовать конкатенацию строк в sql
                     String sql = "SELECT * FROM `users` WHERE `login` = '"
-                            + login + "' AND `email` = '"+ email+"';";
+                            + login + "' AND `email` = '" + email + "';";
                     Statement statement = conn.createStatement();
                     rs = statement.executeQuery(sql);
                     if (rs.next()) {
                         toastMessage = "Такой пользователь уже существует";
                         return false;
-                    }else{
-                    //Регистрируем
+                    } else {
+                        //Регистрируем
                         //Создаём хэш
                         SecretKeySpec sks = null;
                         String hash;
@@ -118,12 +113,12 @@ public class RegActivity extends AppCompatActivity {
                         try {
                             Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
                             c.init(Cipher.ENCRYPT_MODE, sks);
-                            encodedBytes = c.doFinal((login+password).getBytes());
+                            encodedBytes = c.doFinal((login + password).getBytes());
                         } catch (Exception e) {
                             Log.e("Crypto", "AES encryption error");
                         }
                         hash = Base64.encodeToString(encodedBytes, Base64.DEFAULT);
-                        sql = "INSERT INTO `users` (`id`, `login`, `password`, `email`, `sessionId`) VALUES (NULL, '"+login+"', '"+password+"', '"+email+"', '"+hash+"');";
+                        sql = "INSERT INTO `users` (`id`, `login`, `password`, `email`, `sessionId`) VALUES (NULL, '" + login + "', '" + password + "', '" + email + "', '" + hash + "');";
                         statement.executeUpdate(sql);
                         //Проверять создался ли?
 
@@ -132,7 +127,7 @@ public class RegActivity extends AppCompatActivity {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }else{
+            } else {
                 // В отдельном потоке?
                 toastMessage = "Проверьте подключение к интернету";
                 return false;
@@ -143,10 +138,10 @@ public class RegActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if(success){
+            if (success) {
                 Intent intent = new Intent(context, LoginActivity.class);
                 startActivity(intent);
-            }else{
+            } else {
                 //Очищать форму
             }
 

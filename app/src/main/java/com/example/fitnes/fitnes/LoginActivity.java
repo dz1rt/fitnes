@@ -2,17 +2,18 @@ package com.example.fitnes.fitnes;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
+import com.mysql.jdbc.StringUtils;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +22,8 @@ import java.sql.Statement;
 public class LoginActivity extends AppCompatActivity {
 
     private UserAuthTask mAuthTask = null;
-    private Button loginBtn,regBtn;
-    private EditText loginArea,passArea;
+    private Button loginBtn, regBtn;
+    private EditText loginArea, passArea;
 
     private SharedPreferences sharedPreferences = null;
 
@@ -37,26 +38,27 @@ public class LoginActivity extends AppCompatActivity {
         //Закрывать соединение после авторизации?
         //Для сессии нужно сделать класс PreferenceManager
         sharedPreferences = getSharedPreferences("userSession", Context.MODE_PRIVATE);
-        if(sharedPreferences.contains("sessionId")) {
+        if (sharedPreferences.contains("sessionId")) {
             String si = sharedPreferences.getString("sessionId", "");
             //Далее получаем данные пользователя по его sessionId
-            mAuthTask = new UserAuthTask(context,null,null,si);
+            mAuthTask = new UserAuthTask(context, null, null, si);
             mAuthTask.execute();
-        }else{
+        } else {
             listenerEventOnButton();
         }
     }
 
     @Override
     public void onBackPressed() {
-         super.onBackPressed();
-        if(sharedPreferences.contains("sessionId")){
+        super.onBackPressed();
+        if (sharedPreferences.contains("sessionId")) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove("sessionId");
-            Log.d(String.valueOf(sharedPreferences.contains("sessionId")),"asdasda");
+            Log.d(String.valueOf(sharedPreferences.contains("sessionId")), "asdasda");
         }
     }
-    public void listenerEventOnButton(){
+
+    public void listenerEventOnButton() {
         loginBtn = findViewById(R.id.loginBtn);
         regBtn = findViewById(R.id.regBtn);
         loginArea = findViewById(R.id.loginArea);
@@ -67,8 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                     String login = loginArea.getText().toString();
                     String password = passArea.getText().toString();
 
-                    if(!login.equals("") && !password.equals("")){
-                        mAuthTask = new UserAuthTask(context, login, password,null);
+                    if (!StringUtils.isEmptyOrWhitespaceOnly(login) &&
+                            !StringUtils.isEmptyOrWhitespaceOnly(password)) {
+                        mAuthTask = new UserAuthTask(context, login, password, null);
                         mAuthTask.execute();
                     }
                 }
@@ -80,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
         );
     }
+
     public class UserAuthTask extends AsyncTask<Void, Void, Boolean> {
 
         private String login;
@@ -90,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         private String session;
         private String hash;
 
-        UserAuthTask(Activity activity, String loginArea, String passArea,String s) {
+        UserAuthTask(Activity activity, String loginArea, String passArea, String s) {
             login = loginArea;
             password = passArea;
             parentActivity = activity;
@@ -106,14 +110,10 @@ public class LoginActivity extends AppCompatActivity {
                 Statement statement = null;
                 try {
                     statement = conn.createStatement();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    if(session != null){
-                        sql = "SELECT * FROM `users` WHERE `sessionId` = '"+ session +"';";
-                    }else{
-                        sql = "SELECT * FROM `users` WHERE `login` = '"+ login + "' AND `password` = '"+ password +"';";
+                    if (session != null) {
+                        sql = "SELECT * FROM `users` WHERE `sessionId` = '" + session + "';";
+                    } else {
+                        sql = "SELECT * FROM `users` WHERE `login` = '" + login + "' AND `password` = '" + password + "';";
                     }
                     rs = statement.executeQuery(sql);
                     if (rs.next()) {
@@ -122,18 +122,15 @@ public class LoginActivity extends AppCompatActivity {
 
                         toastMessage = "Привет " + login;
                         return true;
-                    }else{
+                    } else {
                         toastMessage = login + "не найден";
-                        return false;
                     }
-
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    toastMessage = "Ошибка доступа к базе данных";
                 }
-            }else{
+            } else {
                 toastMessage = "Проверьте подключение к интернету";
-
-                return false;
             }
 
             return false;
@@ -141,19 +138,18 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            if(success){
-                Intent intent = new Intent(context,MainActivity.class);
-                intent.putExtra("login",login);
+            if (success) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("login", login);
                 startActivity(intent);
             }
-            if(session == null){
+            if (session == null) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("sessionId", hash);
                 editor.apply();
             }
 
             parentActivity.runOnUiThread(() -> Toast.makeText(parentActivity, toastMessage, Toast.LENGTH_SHORT).show());
-
         }
 
         @Override
