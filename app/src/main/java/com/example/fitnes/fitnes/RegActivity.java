@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fitnes.fitnes.service.DatabaseConnect;
+
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -59,6 +61,12 @@ public class RegActivity extends AppCompatActivity {
                     }
                 }
         );
+        backBtn.setOnClickListener(
+                v -> {
+                    Intent intent = new Intent(context,LoginActivity.class);
+                    startActivity(intent);
+                }
+        );
     }
 
     public class UserAuthTask extends AsyncTask<Void, Void, Boolean> {
@@ -92,6 +100,7 @@ public class RegActivity extends AppCompatActivity {
                     rs = statement.executeQuery(sql);
                     if (rs.next()) {
                         toastMessage = "Такой пользователь уже существует";
+                        conn.close();
                         return false;
                     } else {
                         //Регистрируем
@@ -130,10 +139,14 @@ public class RegActivity extends AppCompatActivity {
             } else {
                 // В отдельном потоке?
                 toastMessage = "Проверьте подключение к интернету";
-                return false;
             }
 
-            return true;
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
 
         @Override

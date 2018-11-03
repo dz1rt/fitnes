@@ -1,4 +1,4 @@
-package com.example.fitnes.fitnes;
+package com.example.fitnes.fitnes.service;
 
 import android.util.Log;
 
@@ -13,7 +13,7 @@ public class DatabaseConnect {
     private static String url = "jdbc:mysql://%s/%s";
     private static String host = "192.168.0.12:3306";
     private static String database = "data";
-//
+
     private static String user = "root";
     private static String pass = "1234";
 

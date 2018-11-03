@@ -7,11 +7,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fitnes.fitnes.service.DatabaseConnect;
 import com.mysql.jdbc.StringUtils;
 
 import java.sql.Connection;
@@ -48,15 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (sharedPreferences.contains("sessionId")) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("sessionId");
-            Log.d(String.valueOf(sharedPreferences.contains("sessionId")), "asdasda");
-        }
-    }
 
     public void listenerEventOnButton() {
         loginBtn = findViewById(R.id.loginBtn);
@@ -121,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                         hash = rs.getString("sessionId");
 
                         toastMessage = "Привет " + login;
+                        conn.close();
                         return true;
                     } else {
                         toastMessage = login + "не найден";
@@ -133,6 +125,11 @@ public class LoginActivity extends AppCompatActivity {
                 toastMessage = "Проверьте подключение к интернету";
             }
 
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return false;
         }
 
