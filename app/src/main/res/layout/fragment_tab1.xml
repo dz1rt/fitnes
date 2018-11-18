@@ -13,10 +13,11 @@
         android:layout_width="122dp"
         android:layout_height="44dp"
         android:layout_alignStart="@+id/textView3"
-        android:layout_alignTop="@+id/growth"
+        android:layout_alignTop="@+id/growthEdit"
         android:text="Рост"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_alignLeft="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView3"
@@ -28,19 +29,22 @@
         android:layout_marginTop="122dp"
         android:text="Вес"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="26dp" />
 
     <EditText
         android:id="@+id/weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/growth"
+        android:layout_alignStart="@+id/growthEdit"
         android:layout_alignTop="@+id/textView3"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:layout_alignLeft="@+id/growthEdit" />
 
     <EditText
-        android:id="@+id/growth"
+        android:id="@+id/growthEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -48,16 +52,8 @@
         android:layout_marginEnd="11dp"
         android:layout_marginTop="63dp"
         android:ems="10"
-        android:inputType="number" />
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="65dp"
-        android:layout_marginTop="235dp"
-        android:text="Далее" />
+        android:inputType="number"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="11dp" />
 
 </RelativeLayout>

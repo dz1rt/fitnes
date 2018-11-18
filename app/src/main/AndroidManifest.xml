@@ -39,6 +39,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ListProgram.ListProgram"></activity>
     </application>
 
 </manifest>
