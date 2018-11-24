@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
@@ -22,6 +21,8 @@ import java.sql.Statement;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RegActivity extends AppCompatActivity {
 

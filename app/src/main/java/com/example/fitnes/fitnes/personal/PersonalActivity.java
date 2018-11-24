@@ -1,31 +1,34 @@
 package com.example.fitnes.fitnes.personal;
 
-import android.app.Fragment;
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.fitnes.fitnes.ListProgram.ListProgram;
+import com.example.fitnes.fitnes.ListProgram.ProgramItem;
 import com.example.fitnes.fitnes.LoginActivity;
-import com.example.fitnes.fitnes.service.PagerAdapter;
 import com.example.fitnes.fitnes.R;
+import com.example.fitnes.fitnes.service.PagerAdapter;
 import com.example.fitnes.fitnes.service.RequestDB;
+import com.google.android.material.tabs.TabLayout;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener,Tab2.OnFragmentInteractionListener,Tab3.OnFragmentInteractionListener  {
 
@@ -36,6 +39,7 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
     private Button actionButton;
     private RequestDB requestDB;
     private ResultSet result;
+    private List<ProgramItem> listItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +64,7 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -84,19 +88,31 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
     private void action() {
 
         actionButton = findViewById(R.id.actionButton);
+
         actionButton.setOnClickListener(v -> {
+
             growth = findViewById(R.id.growthEdit); //Рост
             weight = findViewById(R.id.weight); //Вес
             switchBtn = findViewById(R.id.switch1); //свич
-            requestDB = new RequestDB("SELECT * FROM `users` WHERE `id` = '1';");
+
+            requestDB = new RequestDB("SELECT * FROM `programs` WHERE `weight` >= "+weight.getText().toString()+";");
             requestDB.execute();
             try {
                 result = requestDB.get();
-                //TODO: Создать таблицу с программами, получать программы в зависимости от параметров
-                //TODO: заполнить ListProgram
-//                Toast.makeText(this, "get returns " + result.getString("login"), Toast.LENGTH_LONG).show();
+
                 Intent intent = new Intent(context, ListProgram.class);
-                intent.putExtra("result", result.next());
+                listItems = new ArrayList<>();
+
+                do {
+                    listItems.add(new ProgramItem(result.getString("programName"),
+                            result.getString("description"),
+                            result.getInt("weight"),
+                            result.getInt("height"),
+                            result.getBoolean("switch"))) ;
+                }
+                while (result.next());
+
+                intent.putExtra("result", (Serializable) listItems);
                 startActivity(intent);
             } catch (ExecutionException e) {
                 e.printStackTrace();

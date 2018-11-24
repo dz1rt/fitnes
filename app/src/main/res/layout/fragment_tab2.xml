@@ -15,7 +15,9 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="71dp"
         android:text="Что-то ещё"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="28dp" />
 
     <EditText
         android:id="@+id/editTextOther"
@@ -25,5 +27,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp" />
 </RelativeLayout>

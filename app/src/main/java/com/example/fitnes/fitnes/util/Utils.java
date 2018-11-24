@@ -1,16 +1,17 @@
 package com.example.fitnes.fitnes.util;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import org.apache.commons.codec.binary.Hex;
+//import org.apache.commons.codec.binary.Hex;
 
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import androidx.annotation.NonNull;
 
 public class Utils {
     public static void hideKeyboard(@NonNull Activity activity) {
@@ -27,7 +28,8 @@ public class Utils {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.reset();
             byte[] resultByte = md.digest(source.getBytes(Charset.forName("UTF8")));
-            return Hex.encodeHexString(resultByte);
+//            return Hex.encodeHexString(resultByte);
+            return null;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

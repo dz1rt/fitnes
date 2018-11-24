@@ -1,25 +1,24 @@
 package com.example.fitnes.fitnes.service;
 
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.fitnes.fitnes.ListProgram.RecyclerItem;
+import com.example.fitnes.fitnes.ListProgram.ProgramItem;
 import com.example.fitnes.fitnes.R;
 
 import java.util.List;
- 
+
+import androidx.recyclerview.widget.RecyclerView;
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
  
-    private List<RecyclerItem> listItems;
+    private List<ProgramItem> listItems;
     private Context mContext;
  
-    public RecyclerAdapter(List<RecyclerItem> listItems, Context mContext) {
+    public RecyclerAdapter(List<ProgramItem> listItems, Context mContext) {
         this.listItems = listItems;
         this.mContext = mContext;
     }
@@ -33,8 +32,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override //Заполняем данными
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
  
-        final RecyclerItem itemList = listItems.get(i);
-        viewHolder.txtTitle.setText(itemList.getTitle());
+        final ProgramItem itemList = listItems.get(i);
+        viewHolder.txtTitle.setText(itemList.getProgramName());
         viewHolder.txtDescription.setText(itemList.getDescription());
 
     }

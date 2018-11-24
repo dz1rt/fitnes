@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="505dp"
         android:layout_margin="4dp"
@@ -29,7 +29,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:text="Description"
-                android:textAppearance="?android:textAppearanceMedium" />
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_alignParentRight="true" />
 
             <TextView
                 android:id="@+id/txtOptionDigit"
@@ -41,5 +42,5 @@
                 android:text="&#8942;"
                 android:textAppearance="?android:textAppearanceLarge" />
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>
