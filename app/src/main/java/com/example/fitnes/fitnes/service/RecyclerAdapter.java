@@ -52,7 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtDescription = itemView.findViewById(R.id.txtDescription);
-            txtOptionDigit = itemView.findViewById(R.id.txtOptionDigit);
+//            txtOptionDigit = itemView.findViewById(R.id.txtOptionDigit);
         }
     }
 }

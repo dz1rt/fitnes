@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="button1">#1685c5</color>
+    <color name="button2">#3a5795</color>
+    <color name="background1">#1e2e47</color>
+    <color name="footer">#1685c5</color>
+    <color name="editField1">#0a121c</color>
+    <color name="textColor1">#4c4c5e</color>
+    <color name="background2">#3a5795</color>
 </resources>

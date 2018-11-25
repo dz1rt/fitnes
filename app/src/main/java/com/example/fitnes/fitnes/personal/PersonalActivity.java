@@ -34,9 +34,7 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
 
     private SharedPreferences sharedPreferences = null;
     private PersonalActivity context = this;
-    private EditText growth,weight;
-    private Switch switchBtn;
-    private Button actionButton;
+    private EditText weight;
     private RequestDB requestDB;
     private ResultSet result;
     private List<ProgramItem> listItems;
@@ -46,14 +44,6 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
         sharedPreferences = getSharedPreferences("userSession", Context.MODE_PRIVATE);
-
-        //Кнопка Далее
-//        Fragment frag1 = getFragmentManager().findFragmentById(R.id.pager);
-//
-//        growth =  findViewById(R.id.pager).findViewById(R.id.growthEdit);
-//        growth = findViewById(R.id.pager);
-//        weight = findViewById(R.id.weight);
-//        editTextOther = findViewById(R.id.editTextOther);
         action();
 
         //создание табов
@@ -87,13 +77,11 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
 
     private void action() {
 
-        actionButton = findViewById(R.id.actionButton);
+        Button actionButton = findViewById(R.id.actionButton);
 
         actionButton.setOnClickListener(v -> {
 
-            growth = findViewById(R.id.growthEdit); //Рост
             weight = findViewById(R.id.weight); //Вес
-            switchBtn = findViewById(R.id.switch1); //свич
 
             requestDB = new RequestDB("SELECT * FROM `programs` WHERE `weight` >= "+weight.getText().toString()+";");
             requestDB.execute();

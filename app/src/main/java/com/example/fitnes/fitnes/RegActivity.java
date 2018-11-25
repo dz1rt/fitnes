@@ -27,7 +27,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegActivity extends AppCompatActivity {
 
     private UserAuthTask mAuthTask = null;
-    private Button backBtn, regBtn;
     private EditText regLogin, regEmail, regPass, regPassConfirm;
 
     private RegActivity context = this;
@@ -41,12 +40,12 @@ public class RegActivity extends AppCompatActivity {
 
     private void listenerEventOnButton() {
 
-        regBtn = findViewById(R.id.registration);
+        Button regBtn = findViewById(R.id.registration);
         regLogin = findViewById(R.id.regLogin);
         regEmail = findViewById(R.id.regEmail);
         regPass = findViewById(R.id.regPass);
         regPassConfirm = findViewById(R.id.regPassConfirm);
-        backBtn = findViewById(R.id.back);
+        Button backBtn = findViewById(R.id.back);
 
         regBtn.setOnClickListener(
                 v -> {
@@ -71,7 +70,7 @@ public class RegActivity extends AppCompatActivity {
     }
 
     public class UserAuthTask extends AsyncTask<Void, Void, Boolean> {
-
+        //TODO: Вынести в сервис
         private final String login;
         private final String password;
         private final String email;

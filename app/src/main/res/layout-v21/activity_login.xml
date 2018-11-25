@@ -5,27 +5,28 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1e2f47"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".LoginActivity"
-    android:background="#1e2f47">
+    tools:context=".LoginActivity">
 
     <Toolbar
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:background="#1685c5"
-        tools:targetApi="lollipop">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
     </Toolbar>
-    <androidx.appcompat.widget.AppCompatEditText
+
+    <EditText
         android:id="@+id/loginArea"
         style="@style/editableStyle"
         android:layout_width="307dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="142dp"
         android:hint="@string/hint_login"
         android:inputType="textEmailAddress"
         android:maxLines="1"
@@ -33,15 +34,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/passArea"
         style="@style/editableStyle"
         android:layout_width="309dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="209dp"
         android:hint="@string/hint_password"
         android:imeActionId="6"
         android:imeOptions="actionUnspecified"
@@ -52,8 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginArea"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/loginArea" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -63,12 +64,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="174dp"
-        android:gravity="center"
-        android:text="Войти"
-        android:textColor="@color/design_default_color_background"
-        android:textSize="18sp"
-        android:typeface="normal"
-        android:visibility="visible" />
+        android:text="@string/sign_in" />
 
     <Button
         android:id="@+id/regBtn"
@@ -77,8 +73,6 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="71dp"
-        android:gravity="center"
-        android:textSize="18sp"
-        tools:text="Зарегистрироваться" />
+        android:layout_marginBottom="75dp"
+        android:text="@string/registration" />
 </RelativeLayout>

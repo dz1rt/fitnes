@@ -27,9 +27,6 @@ public class Tab1 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private EditText growthEdit;
     private OnFragmentInteractionListener mListener;
 
@@ -46,7 +43,7 @@ public class Tab1 extends Fragment {
      * @return A new instance of fragment Tab1.
      */
     // TODO: Rename and change types and number of parameters
-    public static Tab1 newInstance(String param1, String param2) {
+    private static Tab1 newInstance(String param1, String param2) {
         Tab1 fragment = new Tab1();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -59,8 +56,8 @@ public class Tab1 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
