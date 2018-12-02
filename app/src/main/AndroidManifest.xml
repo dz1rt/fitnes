@@ -48,6 +48,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListProgram.ListProgram" />
+        <activity android:name=".testProgram.TestProgram">
+            <intent-filter>
+                <action android:name=".TestProgram" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".testProgram.TestTraining">
+            <intent-filter>
+                <action android:name=".TestTraining" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

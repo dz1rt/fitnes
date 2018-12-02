@@ -1,13 +1,10 @@
-package com.example.fitnes.fitnes.ListProgram;
+package com.example.fitnes.fitnes.testProgram;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.fitnes.fitnes.R;
 import com.example.fitnes.fitnes.service.ClickListener;
@@ -17,17 +14,19 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 
 import java.util.List;
 
-public class ListProgram extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class TestTraining extends AppCompatActivity {
 
     private RecyclerAdapter recyclerAdapter;
-//    private List<ProgramItem> listItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_program);
-
-
+        setContentView(R.layout.activity_test_training);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null){
@@ -45,19 +44,31 @@ public class ListProgram extends AppCompatActivity {
                 .withActionBarDrawerToggle(true)
                 .build();
 
-        RecyclerView rv = findViewById(R.id.recycler_view);
+        RecyclerView rv = findViewById(R.id.training_array);
         rv.setHasFixedSize(true);
-        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        rv.setLayoutManager(new LinearLayoutManager(this));
         //TODO: Intent intent = getIntent(); Получаем result, заполняем listItems
         Bundle arguments = getIntent().getExtras();
-        List<ProgramItem> result = (List<ProgramItem>) arguments.get("result");
-        recyclerAdapter = new RecyclerAdapter(result, this, true, new ClickListener() {
+        List<TestProgramItem> result = (List<TestProgramItem>) arguments.get("result");
+        recyclerAdapter = new RecyclerAdapter(result, this, false, new ClickListener() {
             @Override
             public void onPositionClicked(int position, View v) {
+                   TextView tv =  v.findViewById(R.id.testTimer);
+                   Integer millisInFuture = Integer.parseInt(tv.getText().toString());
+                new CountDownTimer(millisInFuture, 1000) {
 
+                    public void onTick(long millisUntilFinished) {
+                        tv.setText("" + millisUntilFinished / 1000);
+                    }
+
+                    public void onFinish() {
+                        tv.setText("done!");
+                    }
+                }.start();
             }
-        });
-        rv.setAdapter(recyclerAdapter);
-}
+        }
 
+        );
+        rv.setAdapter(recyclerAdapter);
+    }
 }

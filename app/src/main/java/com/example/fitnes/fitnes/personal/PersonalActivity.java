@@ -1,7 +1,6 @@
 package com.example.fitnes.fitnes.personal;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +16,8 @@ import com.example.fitnes.fitnes.LoginActivity;
 import com.example.fitnes.fitnes.R;
 import com.example.fitnes.fitnes.service.PagerAdapter;
 import com.example.fitnes.fitnes.service.RequestDB;
+import com.example.fitnes.fitnes.testProgram.TestProgramItem;
+import com.example.fitnes.fitnes.testProgram.TestTraining;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
@@ -30,14 +31,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener,Tab2.OnFragmentInteractionListener,Tab3.OnFragmentInteractionListener  {
+public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
 
     private SharedPreferences sharedPreferences = null;
     private PersonalActivity context = this;
     private EditText weight;
+    private Switch flag;
     private RequestDB requestDB;
     private ResultSet result;
     private List<ProgramItem> listItems;
+    private List<TestProgramItem> listTestItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.pager);
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -72,52 +75,82 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
-            }});
-    }
-
-    private void action() {
-
-        Button actionButton = findViewById(R.id.actionButton);
-
-        actionButton.setOnClickListener(v -> {
-
-            weight = findViewById(R.id.weight); //Вес
-
-            requestDB = new RequestDB("SELECT * FROM `programs` WHERE `weight` >= "+weight.getText().toString()+";");
-            requestDB.execute();
-            try {
-                result = requestDB.get();
-
-                Intent intent = new Intent(context, ListProgram.class);
-                listItems = new ArrayList<>();
-
-                do {
-                    listItems.add(new ProgramItem(result.getString("programName"),
-                            result.getString("description"),
-                            result.getInt("weight"),
-                            result.getInt("height"),
-                            result.getBoolean("switch"))) ;
-                }
-                while (result.next());
-
-                intent.putExtra("result", (Serializable) listItems);
-                startActivity(intent);
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         });
     }
 
+    private void action() {
+
+        flag = findViewById(R.id.switch1);
+        Button actionButton = findViewById(R.id.actionButton);
+
+        actionButton.setOnClickListener(v -> {
+            Boolean flagValue = false;
+            if (flagValue) {
+                //Основная тренеровка
+                weight = findViewById(R.id.weight); //Вес
+//            запрос для основной тренеровки
+                requestDB = new RequestDB("SELECT * FROM `programs` WHERE `weight` >= " + weight.getText().toString() + ";");
+                requestDB.execute();
+                try {
+                    result = requestDB.get();
+                    Intent intent = new Intent(context, ListProgram.class);
+                    listItems = new ArrayList<>();
+
+                    do {
+                        listItems.add(new ProgramItem(result.getString("programName"),
+                                result.getString("description"),
+                                result.getInt("weight"),
+                                result.getInt("height"),
+                                result.getBoolean("switch")));
+                    } while (result.next());
+                    intent.putExtra("result", (Serializable) listItems);
+                    startActivity(intent);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                //Тестовая тренеровка
+                requestDB = new RequestDB("SELECT * FROM `dictionary_training` WHERE `program_type` LIKE '%test%'");
+                requestDB.execute();
+                try {
+                    result = requestDB.get();
+
+                    Intent intent = new Intent(context, TestTraining.class);
+                    listTestItems = new ArrayList<>();
+
+                    do {
+                        listTestItems.add(new TestProgramItem(result.getString("title"),
+                                result.getString("time"),
+                                result.getString("description")));
+                    }
+                    while (result.next());
+                    intent.putExtra("result", (Serializable) listTestItems);
+                    startActivity(intent);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        });
+    }
+
     @Override
-public void onBackPressed() {
-    // super.onBackPressed();
-    //TODO:Проверить, последняя ли это активити, если да - openQuitDialog, нет - стандартное поведение кнопки
-    openQuitDialog();
-}
+    public void onBackPressed() {
+        // super.onBackPressed();
+        //TODO:Проверить, последняя ли это активити, если да - openQuitDialog, нет - стандартное поведение кнопки
+        openQuitDialog();
+    }
+
     //TODO:Вынести в отдельный класс
     private void openQuitDialog() {
         AlertDialog.Builder quitDialog = new AlertDialog.Builder(
@@ -125,13 +158,13 @@ public void onBackPressed() {
         quitDialog.setTitle("Вы уверены что хотите выйти?");
 
         quitDialog.setPositiveButton("Да", (dialog, which) -> {
-            if(sharedPreferences.contains("sessionId")){
+            if (sharedPreferences.contains("sessionId")) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.remove("sessionId");
                 editor.apply();
                 Intent intent = new Intent(context, LoginActivity.class);
                 startActivity(intent);
-    }
+            }
             finish();
         });
 
