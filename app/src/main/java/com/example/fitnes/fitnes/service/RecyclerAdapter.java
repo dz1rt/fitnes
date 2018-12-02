@@ -66,7 +66,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public int getItemCount() {
         return listItems.size();
     }
-
+    public void deleteItem(int position){
+        this.listItems.remove(position);
+        super.notifyItemRemoved(position);
+    }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private WeakReference<ClickListener> listenerRef;

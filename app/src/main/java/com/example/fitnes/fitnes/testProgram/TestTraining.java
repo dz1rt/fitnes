@@ -63,6 +63,7 @@ public class TestTraining extends AppCompatActivity {
 
                     public void onFinish() {
                         tv.setText("done!");
+                        recyclerAdapter.deleteItem(position);
                     }
                 }.start();
             }
