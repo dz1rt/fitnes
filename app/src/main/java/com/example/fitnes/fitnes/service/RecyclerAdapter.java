@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-//import com.example.fitnes.fitnes.ListProgram.ProgramItem;
 import com.example.fitnes.fitnes.ListProgram.ProgramItem;
 import com.example.fitnes.fitnes.R;
 import com.example.fitnes.fitnes.testProgram.TestProgramItem;
@@ -84,17 +82,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         public ViewHolder(View itemView, ClickListener listener) {
             super(itemView);
-            listenerRef = new WeakReference<>(listener);
 
-            txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtDescription = itemView.findViewById(R.id.txtDescription);
+            if(flag){
+                txtTitle = itemView.findViewById(R.id.txtTitle);
+                txtDescription = itemView.findViewById(R.id.txtDescription);
 
-            testTitle = itemView.findViewById(R.id.testTitle);
-            testTime = itemView.findViewById(R.id.testTimer);
-            testDescription = itemView.findViewById(R.id.testDescription);
-            testStarterTimeBtn= itemView.findViewById(R.id.testStarterTimeBtn);
+            }else {
 
-            testStarterTimeBtn.setOnClickListener(this);
+                listenerRef = new WeakReference<>(listener);
+                testTitle = itemView.findViewById(R.id.testTitle);
+                testTime = itemView.findViewById(R.id.testTimer);
+                testDescription = itemView.findViewById(R.id.testDescription);
+                testStarterTimeBtn= itemView.findViewById(R.id.testStarterTimeBtn);
+
+                testStarterTimeBtn.setOnClickListener(this);
+            }
+
         }
 
         // onClick Listener for view

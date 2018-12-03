@@ -9,8 +9,12 @@ import android.widget.Toast;
 import com.example.fitnes.fitnes.R;
 import com.example.fitnes.fitnes.service.ClickListener;
 import com.example.fitnes.fitnes.service.RecyclerAdapter;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 
 import java.util.List;
 
@@ -37,7 +41,18 @@ public class TestTraining extends AppCompatActivity {
 //        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_home);
 //        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings);
 
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .addProfiles(
+                        new ProfileDrawerItem()
+                                .withName("Dmitriy Volkov")
+                                .withEmail("dm8205@yandex.ru")
+                                .withIcon(GoogleMaterial.Icon.gmd_supervisor_account)
+                )
+                .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
+                .build();
         Drawer drawer = new DrawerBuilder()
+                .withAccountHeader(headerResult)
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withTranslucentStatusBar(true)
@@ -50,23 +65,20 @@ public class TestTraining extends AppCompatActivity {
         //TODO: Intent intent = getIntent(); Получаем result, заполняем listItems
         Bundle arguments = getIntent().getExtras();
         List<TestProgramItem> result = (List<TestProgramItem>) arguments.get("result");
-        recyclerAdapter = new RecyclerAdapter(result, this, false, new ClickListener() {
-            @Override
-            public void onPositionClicked(int position, View v) {
-                   TextView tv =  v.findViewById(R.id.testTimer);
-                   Integer millisInFuture = Integer.parseInt(tv.getText().toString());
-                new CountDownTimer(millisInFuture, 1000) {
+        recyclerAdapter = new RecyclerAdapter(result, this, false, (position, v) -> {
+               TextView tv =  v.findViewById(R.id.testTimer);
+               Integer millisInFuture = Integer.parseInt(tv.getText().toString());
+            new CountDownTimer(millisInFuture, 1000) {
 
-                    public void onTick(long millisUntilFinished) {
-                        tv.setText("" + millisUntilFinished / 1000);
-                    }
+                public void onTick(long millisUntilFinished) {
+                    tv.setText("" + millisUntilFinished / 1000);
+                }
 
-                    public void onFinish() {
-                        tv.setText("done!");
-                        recyclerAdapter.deleteItem(position);
-                    }
-                }.start();
-            }
+                public void onFinish() {
+                    tv.setText("done!");
+                    recyclerAdapter.deleteItem(position);
+                }
+            }.start();
         }
 
         );

@@ -33,7 +33,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="26dp" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,9 +41,10 @@
         android:layout_alignTop="@+id/textView3"
         android:ems="10"
         android:inputType="number"
-        android:layout_alignLeft="@+id/growthEdit" />
+        android:layout_alignLeft="@+id/growthEdit"
+        />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/growthEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
         android:ems="10"
         android:inputType="number"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="11dp" />
+        android:layout_marginRight="11dp"
+        tools:ignore="RelativeOverlap" />
 
 </RelativeLayout>

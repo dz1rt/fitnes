@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -19,6 +20,13 @@ import com.example.fitnes.fitnes.service.RequestDB;
 import com.example.fitnes.fitnes.testProgram.TestProgramItem;
 import com.example.fitnes.fitnes.testProgram.TestTraining;
 import com.google.android.material.tabs.TabLayout;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -29,6 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
@@ -46,6 +55,34 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null){
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+//        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_home);
+//        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings);
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .addProfiles(
+                        new ProfileDrawerItem()
+                                .withName("Dmitriy Volkov")
+                                .withEmail("dm8205@yandex.ru")
+                                .withIcon(GoogleMaterial.Icon.gmd_supervisor_account)
+                )
+                .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
+                .build();
+        Drawer drawer = new DrawerBuilder()
+                .withAccountHeader(headerResult)
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withTranslucentStatusBar(true)
+                .withActionBarDrawerToggle(true)
+                .build();
+
+
         sharedPreferences = getSharedPreferences("userSession", Context.MODE_PRIVATE);
         action();
 
@@ -85,7 +122,7 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
         Button actionButton = findViewById(R.id.actionButton);
 
         actionButton.setOnClickListener(v -> {
-            Boolean flagValue = false;
+            Boolean flagValue = true;
             if (flagValue) {
                 //Основная тренеровка
                 weight = findViewById(R.id.weight); //Вес
