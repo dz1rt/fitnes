@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".personal.Tab3">
+    tools:context=".personal.Tab3"
+    android:background="@color/bg_color_3">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -13,7 +14,7 @@
         android:textSize="30dp"
         />
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch1"
         android:layout_width="131dp"
         android:layout_height="76dp"
@@ -22,7 +23,6 @@
         android:layout_marginStart="113dp"
         android:layout_marginTop="115dp"
         android:text="Switch"
-        android:checked="false"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="113dp" />
 

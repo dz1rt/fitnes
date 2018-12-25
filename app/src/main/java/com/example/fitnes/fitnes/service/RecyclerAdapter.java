@@ -79,6 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private TextView testTime;
         private TextView testDescription;
         private Button testStarterTimeBtn;
+        private Button watchVideoBtn;
 
         public ViewHolder(View itemView, ClickListener listener) {
             super(itemView);
@@ -86,18 +87,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             if(flag){
                 txtTitle = itemView.findViewById(R.id.txtTitle);
                 txtDescription = itemView.findViewById(R.id.txtDescription);
-
             }else {
-
                 listenerRef = new WeakReference<>(listener);
                 testTitle = itemView.findViewById(R.id.testTitle);
                 testTime = itemView.findViewById(R.id.testTimer);
                 testDescription = itemView.findViewById(R.id.testDescription);
                 testStarterTimeBtn= itemView.findViewById(R.id.testStarterTimeBtn);
+                watchVideoBtn= itemView.findViewById(R.id.watchVideoBtn);
 
                 testStarterTimeBtn.setOnClickListener(this);
+                watchVideoBtn.setOnClickListener(this);
             }
-
         }
 
         // onClick Listener for view
@@ -105,7 +105,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public void onClick(View v) {
 
             if (v.getId() == testStarterTimeBtn.getId()) {
-                listenerRef.get().onPositionClicked(getAdapterPosition(),itemView);
+                listenerRef.get().onPositionClicked(getAdapterPosition(),itemView,testStarterTimeBtn.getId());
+            }else if (v.getId() == watchVideoBtn.getId()){
+                listenerRef.get().onPositionClicked(getAdapterPosition(),itemView,watchVideoBtn.getId());
             }
         }
     }

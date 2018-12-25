@@ -5,7 +5,6 @@ import java.io.Serializable;
 // Модель элемента
 public class TestProgramItem implements Serializable {
 
-
     private String title;
     private String time;
     private String description;

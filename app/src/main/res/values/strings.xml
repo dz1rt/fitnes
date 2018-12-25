@@ -10,4 +10,10 @@
     <string name="hint_email">Enter your email</string>
     <string name="hint_confirm_password">Confirm your password</string>
     <string name="brand">Fitnes</string>
+    <string name="tab_name_1">Основное</string>
+    <string name="tab_name_2">Размеры</string>
+    <string name="tab_name_3">Дополнительное</string>
+    <string name="nbar_personality">Личные показатели</string>
+    <string name="exit">Выйти</string>
+    <string name="search_training_btn">Подобрать тренеровку</string>
 </resources>

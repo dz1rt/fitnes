@@ -19,7 +19,6 @@ android {
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //        }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -38,4 +37,5 @@ dependencies {
     implementation 'mysql:mysql-connector-java:5.1.13'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.mikepenz:google-material-typeface:3.0.1.3.original@aar'
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }

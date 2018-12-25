@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".personal.Tab1">
+    tools:context=".personal.Tab1"
+    android:background="@color/bg_color_3">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,50 +13,90 @@
         android:id="@+id/textView4"
         android:layout_width="122dp"
         android:layout_height="44dp"
-        android:layout_alignStart="@+id/textView3"
+        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/growthEdit"
+        android:layout_marginStart="15dp"
+        android:gravity="center"
         android:text="Рост"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:typeface="normal"
-        android:layout_alignLeft="@+id/textView3" />
+        android:textColor="@color/white_text_color_1"
+        android:typeface="normal" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="122dp"
         android:layout_height="44dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="26dp"
+        android:layout_alignStart="@+id/gender"
         android:layout_marginTop="122dp"
+        android:gravity="center"
         android:text="Вес"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:typeface="normal"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="26dp" />
+        android:textColor="@color/white_text_color_1"
+        android:typeface="normal" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/weight"
-        android:layout_width="wrap_content"
+        android:layout_width="213dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/growthEdit"
         android:layout_alignTop="@+id/textView3"
         android:ems="10"
-        android:inputType="number"
-        android:layout_alignLeft="@+id/growthEdit"
-        />
+        android:hint="В кг"
+        android:inputType="number" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/growthEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
         android:layout_marginTop="63dp"
         android:ems="10"
+        android:hint="В см"
         android:inputType="number"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="11dp"
         tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="122dp"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_marginTop="187dp"
+        android:text="Пол"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:typeface="normal"
+        android:textColor="@color/white_text_color_1"
+        android:gravity="center"/>
+
+    <RadioGroup
+        android:layout_width="208dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/gender"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/gender_famale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gender_male"
+            android:layout_weight="1"
+            android:text="Женский"
+            android:textColor="@color/white_text_color_1" />
+
+        <RadioButton
+            android:id="@+id/gender_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:text="Мужской"
+            android:textColor="@color/white_text_color_1" />
+    </RadioGroup>
 
 </RelativeLayout>

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.example.fitnes.fitnes.service.UserAuthTask;
 import com.mysql.jdbc.StringUtils;
@@ -18,7 +17,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private UserAuthTask mAuthTask = null;
     private EditText loginArea, passArea;
-//    private RelativeLayout relativeLayout;
     private LoginActivity context = this;
 
     @Override
@@ -26,8 +24,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        relativeLayout = findViewById(R.id.linearLayout);
-//        relativeLayout.setOnClickListener(null);
             listenerEventOnButton();
     }
 
@@ -58,6 +54,4 @@ public class LoginActivity extends AppCompatActivity {
                 }
         );
     }
-
-
 }

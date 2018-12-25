@@ -10,4 +10,6 @@
     <color name="editField1">#0a121c</color>
     <color name="textColor1">#4c4c5e</color>
     <color name="background2">#3a5795</color>
+    <color name="white_text_color_1">#FFEDE6E6</color>
+    <color name="bg_color_3">#1685c5</color>
 </resources>

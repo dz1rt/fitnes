@@ -8,13 +8,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.fitnes.fitnes.ListProgram.ListProgram;
 import com.example.fitnes.fitnes.ListProgram.ProgramItem;
 import com.example.fitnes.fitnes.LoginActivity;
 import com.example.fitnes.fitnes.R;
+import com.example.fitnes.fitnes.common.NavigationBarConfig;
 import com.example.fitnes.fitnes.service.PagerAdapter;
 import com.example.fitnes.fitnes.service.RequestDB;
 import com.example.fitnes.fitnes.testProgram.TestProgramItem;
@@ -25,7 +28,9 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.io.Serializable;
@@ -40,7 +45,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
+public class PersonalActivity extends   AppCompatActivity
+                            implements  Tab1.OnFragmentInteractionListener,
+                                        Tab2.OnFragmentInteractionListener,
+                                        Tab3.OnFragmentInteractionListener {
 
     private SharedPreferences sharedPreferences = null;
     private PersonalActivity context = this;
@@ -50,47 +58,30 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
     private ResultSet result;
     private List<ProgramItem> listItems;
     private List<TestProgramItem> listTestItems;
+    private Boolean flagValue = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
 
+        flag = findViewById(R.id.switch1);
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null){
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-//        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_home);
-//        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings);
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .addProfiles(
-                        new ProfileDrawerItem()
-                                .withName("Dmitriy Volkov")
-                                .withEmail("dm8205@yandex.ru")
-                                .withIcon(GoogleMaterial.Icon.gmd_supervisor_account)
-                )
-                .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
-                .build();
-        Drawer drawer = new DrawerBuilder()
-                .withAccountHeader(headerResult)
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withTranslucentStatusBar(true)
-                .withActionBarDrawerToggle(true)
-                .build();
-
+        NavigationBarConfig navigationBarConfig = new NavigationBarConfig(this,toolbar);
+        navigationBarConfig.setToolBar();
 
         sharedPreferences = getSharedPreferences("userSession", Context.MODE_PRIVATE);
         action();
 
         //создание табов
         TabLayout tabLayout = findViewById(R.id.tablayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_name_1)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_name_2)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_name_3)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.pager);
@@ -118,11 +109,10 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
 
     private void action() {
 
-        flag = findViewById(R.id.switch1);
         Button actionButton = findViewById(R.id.actionButton);
 
         actionButton.setOnClickListener(v -> {
-            Boolean flagValue = true;
+
             if (flagValue) {
                 //Основная тренеровка
                 weight = findViewById(R.id.weight); //Вес
@@ -214,6 +204,11 @@ public class PersonalActivity extends AppCompatActivity implements Tab1.OnFragme
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

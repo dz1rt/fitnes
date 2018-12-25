@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.fitnes.fitnes.R;
+import com.example.fitnes.fitnes.common.NavigationBarConfig;
 import com.example.fitnes.fitnes.service.ClickListener;
 import com.example.fitnes.fitnes.service.RecyclerAdapter;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -39,26 +40,8 @@ public class ListProgram extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-//        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_home);
-//        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings);
-
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .addProfiles(
-                        new ProfileDrawerItem()
-                                .withName("Dmitriy Volkov")
-                                .withEmail("dm8205@yandex.ru")
-                                .withIcon(GoogleMaterial.Icon.gmd_supervisor_account)
-                )
-                .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
-                .build();
-        Drawer drawer = new DrawerBuilder()
-                .withAccountHeader(headerResult)
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withTranslucentStatusBar(true)
-                .withActionBarDrawerToggle(true)
-                .build();
+        NavigationBarConfig navigationBarConfig = new NavigationBarConfig(this,toolbar);
+        navigationBarConfig.setToolBar();
 
         RecyclerView rv = findViewById(R.id.recycler_view);
         rv.setHasFixedSize(true);
@@ -66,7 +49,7 @@ public class ListProgram extends AppCompatActivity {
         //TODO: Intent intent = getIntent(); Получаем result, заполняем listItems
         Bundle arguments = getIntent().getExtras();
         List<ProgramItem> result = (List<ProgramItem>) arguments.get("result");
-        recyclerAdapter = new RecyclerAdapter(result, this, true, (position, v) -> {
+        recyclerAdapter = new RecyclerAdapter(result, this, true, (position, v,elementId) -> {
 
         });
         rv.setAdapter(recyclerAdapter);

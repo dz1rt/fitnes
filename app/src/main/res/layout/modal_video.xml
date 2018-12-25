@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    android:background="#9e000000"
+    android:clickable="true">
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="276dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/background1"
+        app:cardCornerRadius="15dp">
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/mvPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            >
+
+        </com.google.android.youtube.player.YouTubePlayerView>
+
+        <Button
+            android:id="@+id/mvBackBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:text="Вернуться"
+            android:layout_marginStart="35dp"
+            android:layout_marginVertical="5dp" />
+        <Button
+            android:id="@+id/mvPlayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="35dp"
+            android:layout_marginVertical="5dp"
+            android:text="Посмотреть" />
+    </androidx.cardview.widget.CardView
+>
+</RelativeLayout>

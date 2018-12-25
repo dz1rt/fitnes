@@ -5,25 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".personal.PersonalActivity">
+    tools:context=".personal.PersonalActivity"
+    android:background="@color/bg_color_3">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-
-    <!--<androidx.appcompat.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-
-        <!--android:layout_weight="1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:minHeight="?attr/actionBarSize"-->
-        <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
-
-
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
 
@@ -46,10 +33,13 @@
 
     <Button
         android:id="@+id/actionButton"
-        android:layout_weight="1"
-        android:layout_gravity="right"
-        android:layout_width="wrap_content"
+        style="@style/button2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Далее" />
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:text="@string/search_training_btn"
+        android:layout_margin="5dp"
+        />
 
 </LinearLayout>

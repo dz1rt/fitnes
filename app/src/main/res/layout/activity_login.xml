@@ -19,6 +19,7 @@
         android:background="#1685c5"
         tools:targetApi="lollipop">
     </Toolbar>
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/loginArea"
         style="@style/editableStyle"
